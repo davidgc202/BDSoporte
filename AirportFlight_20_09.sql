@@ -399,3 +399,128 @@ GO
 CREATE INDEX IX_CheckIn_IDTicket ON CheckIn (IDTicket);
 CREATE INDEX IX_CheckIn_CheckInTime ON CheckIn (CheckInTime);
 GO
+
+
+
+-- Insertar países
+INSERT INTO Country (IDCountry, CountryName) VALUES
+(1, 'United States'),
+(2, 'Mexico'),
+(3, 'Canada');
+
+-- Insertar ciudades
+INSERT INTO City (IDCity, CityName, IDCountry) VALUES
+(1, 'New York', 1),
+(2, 'Los Angeles', 1),
+(3, 'Mexico City', 2),
+(4, 'Toronto', 3);
+
+-- Insertar aeropuertos
+INSERT INTO Airport (IDAirport, Name, IDCity) VALUES
+(1, 'John F. Kennedy International Airport', 1),
+(2, 'Los Angeles International Airport', 2),
+(3, 'Mexico City International Airport', 3),
+(4, 'Toronto Pearson International Airport', 4);
+
+-- Insertar aerolíneas
+INSERT INTO Airline (IDAirline, AirlineName) VALUES
+(1, 'American Airlines'),
+(2, 'Delta Airlines'),
+(3, 'Aeromexico');
+
+-- Insertar modelo de avión
+INSERT INTO PlaneModel (IDPlaneModel, Description, Graphic) VALUES
+(1, 'Boeing 737', NULL),
+(2, 'Airbus A320', NULL);
+
+-- Insertar aviones
+INSERT INTO Airplane (RegistrationNumber, BeginOfOperation, Status, IDPlaneModel) VALUES
+('N123AA', '2020-01-15', 'Activo', 1),
+('N456DL', '2019-06-22', 'Activo', 2);
+
+-- Insertar asientos
+INSERT INTO Seat (IDSeat, Size, Number, Location, IDPlaneModel) VALUES
+(1, 'Medium', 1, 'A1', 1),
+(2, 'Medium', 2, 'A2', 1),
+(3, 'Medium', 3, 'B1', 2),
+(4, 'Medium', 4, 'B2', 2);
+
+-- Insertar vuelos
+INSERT INTO FlightNumber (IDFlightNumber, Description, Type, DepartureTime, IDAirportStart, IDAirportGoal, IDPlaneModel, IDAirline) VALUES
+(1, 'AA100', 'International', '2024-10-12 08:00:00', 1, 3, 1, 1),
+(2, 'DL200', 'Domestic', '2024-11-05 09:30:00', 2, 4, 2, 2);
+
+-- Insertar vuelo específico
+INSERT INTO Flight (IDFlight, FlightDate, BoardingTime, Gate, CheckinCounter, IDFlightNumber) VALUES
+(1, '2024-10-12', '2024-10-12 07:30:00', 'G12', 'C5', 1),
+(2, '2024-11-05', '2024-11-05 09:00:00', 'B7', 'A2', 2);
+
+-- Insertar tripulación
+INSERT INTO CrewMember (IDCrewMember, Name) VALUES
+(1, 'John Doe'),
+(2, 'Jane Smith'),
+(3, 'Carlos Rodriguez');
+
+-- Relacionar vuelo con la tripulación
+INSERT INTO FlightCrew (IDFlight, IDCrewMember) VALUES
+(1, 1),
+(1, 2),
+(2, 3);
+
+-- Insertar escalas
+INSERT INTO FlightLayover (IDFlight, IDAirport, LayoverTime) VALUES
+(1, 2, '2024-10-12 10:30:00'),
+(2, 3, '2024-11-05 11:00:00');
+
+-- Insertar categorías de clientes
+INSERT INTO CustomerCategory (IDCustomerCategory, CategoryName) VALUES
+(1, 'Gold'),
+(2, 'Silver'),
+(3, 'Bronze');
+
+-- Insertar clientes
+INSERT INTO Customer (IdCustomer, DateOfBirth, Name, FFCNumber, IDCustomerCategory) VALUES
+(1, '1985-05-15', 'Alice Johnson', NULL, 1),
+(2, '1990-12-01', 'Bob Smith', NULL, 2);
+
+-- Insertar categorías de boletos
+INSERT INTO TicketCategory (IDTicketCategory, CategoryName) VALUES
+(1, 'Economy'),
+(2, 'Business');
+
+-- Insertar boletos
+INSERT INTO Ticket (IDTicket, TicketingCode, IDCustomer, IDTicketCategory) VALUES
+(1, 'TKT12345', 1, 1),
+(2, 'TKT67890', 2, 2);
+
+-- Insertar reservaciones
+INSERT INTO Reservation (IDReservation, IDFlight, IDCustomer, ReservationDate, StatusReservation) VALUES
+(1, 1, 1, '2024-09-19', 'Reservado'),
+(2, 2, 2, '2024-09-19', 'Reservado');
+
+-- Insertar cupones
+INSERT INTO Coupon (IDCoupon, IDTicket, DateOfRedemption, Class) VALUES
+(1, 1, '2024-10-12', 'Economy'),
+(2, 2, '2024-11-05', 'Business');
+
+-- Insertar equipaje
+INSERT INTO PieceOfLuggage (IDPieceOfLuggage, Weight, Material, Color, IDCoupon, IDTicket) VALUES
+(1, 23.5, 'Plastic', 'Red', 1, 1),
+(2, 18.7, 'Leather', 'Black', 2, 2);
+
+-- Insertar asientos disponibles
+INSERT INTO AvailableSeat (IDFlight, IDSeat, IDPlaneModel, StatusSeat) VALUES
+(1, 1, 1, 'Disponible'),
+(1, 2, 1, 'Reservado'),
+(2, 3, 2, 'Disponible'),
+(2, 4, 2, 'Reservado');
+
+-- Insertar asignaciones de asientos
+INSERT INTO ReservationSeat (IDReservation, IDFlight, IDSeat, IDPlaneModel) VALUES
+(1, 1, 2, 1),
+(2, 2, 4, 2);
+
+-- Insertar check-in
+INSERT INTO CheckIn (IDCheckIn, IDTicket, CheckInTime) VALUES
+(1, 1, '2024-10-12 06:00:00'),
+(2, 2, '2024-11-05 07:00:00');
